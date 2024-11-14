@@ -1,163 +1,92 @@
-// Initialize local storage if empty
-if (!localStorage.getItem('domains')) {
-    localStorage.setItem('domains', JSON.stringify([
-        {
-            name: 'example.com',
-            price: 999,
-            description: 'A perfect domain for your showcase website',
-            category: 'business'
-        }
-    ]));
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const domains = [
+    { name: 'septiccompany.co', price: 399, description: 'A reliable domain for your septic company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=septiccompany.co' },
+    { name: 'machineryrentalcompany.com', price: 499, description: 'Ideal for a machinery rental business.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=machineryrentalcompany.com' },
+    { name: 'homeinspectorspecialist.com', price: 599, description: 'Perfect for a home inspection specialist.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=homeinspectorspecialist.com' },
+    { name: 'environmentalremediationcompany.com', price: 699, description: 'Suitable for an environmental remediation company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=environmentalremediationcompany.com' },
+    { name: 'riggingllc.com', price: 799, description: 'A strong domain for a rigging LLC.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=riggingllc.com' },
+    { name: 'homestagingllc.com', price: 899, description: 'Great for a home staging LLC.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=homestagingllc.com' },
+    { name: 'floorcoatingservices.com', price: 999, description: 'Ideal for floor coating services.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=floorcoatingservices.com' },
+    { name: 'stoneworkservices.com', price: 1099, description: 'Perfect for stonework services.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=stoneworkservices.com' },
+    { name: 'aithought.co', price: 1199, description: 'A premium domain for AI thought leaders.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=aithought.co' },
+    { name: 'cognitiveagent.co', price: 1299, description: 'Ideal for cognitive agent solutions.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=cognitiveagent.co' },
+    { name: 'guardbot.co', price: 1399, description: 'Perfect for a security robot company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=guardbot.co' },
+    { name: 'watertreatmentinc.com', price: 1499, description: 'Ideal for a water treatment company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=watertreatmentinc.com' },
+    { name: 'phoenixsolarpanel.com', price: 1599, description: 'Great for a solar panel company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=phoenixsolarpanel.com' }
+  ];
 
-if (!localStorage.getItem('adminPassword')) {
-    localStorage.setItem('adminPassword', 'AZERqsdf1235@'); // Default password
-}
+  const filters = {
+    keyword: '',
+    minPrice: 0,
+    maxPrice: 1000,
+    location: null
+  };
 
-// DOM Elements
-const domainCardsContainer = document.getElementById('domain-cards');
-const keywordInput = document.getElementById('keyword');
-const minPriceInput = document.getElementById('minPrice');
-const maxPriceInput = document.getElementById('maxPrice');
-const adminBtn = document.getElementById('adminBtn');
-const adminLoginModal = document.getElementById('adminLoginModal');
-const adminPanelModal = document.getElementById('adminPanelModal');
-const contactForm = document.getElementById('contactForm');
-const newsletterForm = document.getElementById('newsletterForm');
+  const keywordInput = document.getElementById('keyword');
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  const locationInput = document.getElementById('location');
+  const domainCardsContainer = document.getElementById('domain-cards');
 
-// Admin Functions
-let isAdminLoggedIn = false;
-
-function login() {
-    const password = document.getElementById('adminPassword').value;
-    if (password === localStorage.getItem('adminPassword')) {
-        isAdminLoggedIn = true;
-        adminLoginModal.style.display = 'none';
-        adminPanelModal.style.display = 'block';
-        loadDomainsForEditing();
-    } else {
-        alert('Incorrect password');
-    }
-}
-
-function loadDomainsForEditing() {
-    const domains = JSON.parse(localStorage.getItem('domains'));
-    const domainsList = document.getElementById('domainsList');
-    domainsList.innerHTML = domains.map((domain, index) => `
-        <div class="domain-edit-item">
-            <input type="text" value="${domain.name}" data-index="${index}" data-field="name">
-            <input type="number" value="${domain.price}" data-index="${index}" data-field="price">
-            <button onclick="deleteDomain(${index})">Delete</button>
+  const renderDomains = (domains) => {
+    domainCardsContainer.innerHTML = '';
+    domains.forEach((domain) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-header">
+          <div class="card-title">${domain.name}</div>
         </div>
-    `).join('');
-}
-
-function deleteDomain(index) {
-    const domains = JSON.parse(localStorage.getItem('domains'));
-    domains.splice(index, 1);
-    localStorage.setItem('domains', JSON.stringify(domains));
-    loadDomainsForEditing();
-    renderDomains();
-}
-
-// Domain Management
-function addDomain(event) {
-    event.preventDefault();
-    const domains = JSON.parse(localStorage.getItem('domains'));
-    const newDomain = {
-        name: document.getElementById('newDomainName').value,
-        price: Number(document.getElementById('newDomainPrice').value),
-        description: document.getElementById('newDomainDescription').value,
-        category: document.getElementById('newDomainCategory').value
-    };
-    domains.push(newDomain);
-    localStorage.setItem('domains', JSON.stringify(domains));
-    document.getElementById('domainForm').reset();
-    loadDomainsForEditing();
-    renderDomains();
-}
-
-// Create domain card HTML
-function createDomainCard(domain) {
-    return `
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">${domain.name}</h2>
-            </div>
-            <div class="card-content">
-                <p>${domain.description}</p>
-            </div>
-            <div class="card-footer">
-                <div class="price">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/GoDaddy_Logo.svg" alt="GoDaddy">
-                    <span>$${domain.price}</span>
-                </div>
-                <button class="button" onclick="window.open('https://godaddy.com/domains/searchresults.aspx?checkAvail=1&domainToCheck=${domain.name}', '_blank')">
-                    Buy on GoDaddy
-                </button>
-            </div>
+        <div class="card-content">
+          <p>${domain.description}</p>
         </div>
-    `;
-}
-
-// Filter domains
-function filterDomains() {
-    const domains = JSON.parse(localStorage.getItem('domains'));
-    const keyword = keywordInput.value.toLowerCase();
-    const minPrice = Number(minPriceInput.value) || 0;
-    const maxPrice = Number(maxPriceInput.value) || Infinity;
-
-    return domains.filter(domain => {
-        const matchesKeyword = domain.name.toLowerCase().includes(keyword) ||
-                             domain.description.toLowerCase().includes(keyword) ||
-                             domain.category.toLowerCase().includes(keyword);
-        const matchesPrice = domain.price >= minPrice && 
-                           (maxPrice === 0 || domain.price <= maxPrice);
-        return matchesKeyword && matchesPrice;
+        <div class="card-footer">
+          <div class="price">
+            <span class="font-bold text-lg">$${domain.price}</span>
+          </div>
+          <div class="actions">
+            <a href="${domain.link}" class="button">Buy on GoDaddy</a>
+            <button class="button make-offer">Make Offer</button>
+          </div>
+        </div>
+      `;
+      domainCardsContainer.appendChild(card);
     });
-}
+  };
 
-// Render domains
-function renderDomains() {
-    const filteredDomains = filterDomains();
-    domainCardsContainer.innerHTML = filteredDomains
-        .map(domain => createDomainCard(domain))
-        .join('');
-}
+  const filterDomains = () => {
+    const filteredDomains = domains.filter((domain) => {
+      return (
+        domain.name.toLowerCase().includes(filters.keyword.toLowerCase()) &&
+        domain.price >= filters.minPrice &&
+        domain.price <= filters.maxPrice &&
+        (!filters.location || (domain.location.lat === filters.location.lat && domain.location.lng === filters.location.lng))
+      );
+    });
+    renderDomains(filteredDomains);
+  };
 
-// Event Listeners
-adminBtn.addEventListener('click', () => {
-    if (!isAdminLoggedIn) {
-        adminLoginModal.style.display = 'block';
-    } else {
-        adminPanelModal.style.display = 'block';
-    }
+  keywordInput.addEventListener('input', (e) => {
+    filters.keyword = e.target.value;
+    filterDomains();
+  });
+
+  minPriceInput.addEventListener('input', (e) => {
+    filters.minPrice = parseInt(e.target.value) || 0;
+    filterDomains();
+  });
+
+  maxPriceInput.addEventListener('input', (e) => {
+    filters.maxPrice = parseInt(e.target.value) || 1000;
+    filterDomains();
+  });
+
+  locationInput.addEventListener('input', (e) => {
+    const [lat, lng] = e.target.value.split(',').map(Number);
+    filters.location = lat && lng ? { lat, lng } : null;
+    filterDomains();
+  });
+
+  // Initial render
+  renderDomains(domains);
 });
-
-document.getElementById('domainForm').addEventListener('submit', addDomain);
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to a server
-    alert('Thank you for your message! We will get back to you soon.');
-    contactForm.reset();
-});
-
-newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Thank you for subscribing to our newsletter!');
-    newsletterForm.reset();
-});
-
-keywordInput.addEventListener('input', renderDomains);
-minPriceInput.addEventListener('input', renderDomains);
-maxPriceInput.addEventListener('input', renderDomains);
-
-// Close modals when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === adminLoginModal) adminLoginModal.style.display = 'none';
-    if (e.target === adminPanelModal) adminPanelModal.style.display = 'none';
-});
-
-// Initial render
-renderDomains();
