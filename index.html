@@ -1,63 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domain Sales Website</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Domains Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container mx-auto py-8">
-    <header class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Domain Names For Sale</h1>
-      <p class="text-gray-500">Find the perfect domain for your next project</p>
-    </header>
-
-    <div class="mb-8">
-      <div class="flex items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search by keyword"
-          class="border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          id="keyword"
-        />
-      </div>
-      <div class="flex justify-between">
-        <div class="flex items-center">
-          <span class="mr-2">Price:</span>
-          <input
-            type="number"
-            min="0"
-            max="1000"
-            placeholder="Min"
-            class="border-gray-300 rounded-md py-2 px-4 w-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="minPrice"
-          />
-          <span class="mx-2">-</span>
-          <input
-            type="number"
-            min="0"
-            max="1000"
-            placeholder="Max"
-            class="border-gray-300 rounded-md py-2 px-4 w-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="maxPrice"
-          />
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <h2>Admin Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter admin password">
+            <button onclick="login()">Login</button>
         </div>
-        <div class="flex items-center">
-          <input
-            type="text"
-            placeholder="Location"
-            class="border-gray-300 rounded-md py-2 px-4 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="location"
-          />
-        </div>
-      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="domain-cards">
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="modal">
+        <div class="modal-content">
+            <h2>Admin Panel</h2>
+            <form id="domainForm">
+                <input type="text" id="newDomainName" placeholder="Domain Name" required>
+                <input type="number" id="newDomainPrice" placeholder="Price" required>
+                <textarea id="newDomainDescription" placeholder="Description" required></textarea>
+                <input type="text" id="newDomainCategory" placeholder="Category" required>
+                <button type="submit">Add Domain</button>
+            </form>
+            <div id="domainsList">
+                <!-- Domains will be listed here for editing -->
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <!-- Main Content -->
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Premium Domains</div>
+            <div class="nav-links">
+                <a href="#domains">Domains</a>
+                <a href="#contact">Contact</a>
+                <button id="adminBtn" class="admin-button">Admin</button>
+            </div>
+        </nav>
+
+        <header class="header">
+            <h1>Premium Domain Names For Sale</h1>
+            <p>Find the perfect domain for your next project</p>
+        </header>
+
+        <div class="search-filters">
+            <input type="text" placeholder="Search by keyword" id="keyword"/>
+            <div class="price-filter">
+                <input type="number" min="0" max="1000" placeholder="Min Price" id="minPrice"/>
+                <input type="number" min="0" max="1000" placeholder="Max Price" id="maxPrice"/>
+            </div>
+        </div>
+
+        <div class="grid" id="domain-cards"></div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <h2>Contact Us</h2>
+            <div class="contact-container">
+                <form id="contactForm" class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>Email:</strong> contact@premiumdomains.com</p>
+                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>We specialize in premium domain names for businesses and individuals. Our curated selection ensures quality and value for our clients.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#domains">Available Domains</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <form id="newsletterForm">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Premium Domains. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
-                            </html>
+              </html>
