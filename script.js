@@ -1,4 +1,4 @@
-
+// script.js
 // Domain data
 const domains = [
     { name: 'septiccompany.co', price: 2999, category: 'services', description: 'Perfect for septic service companies', age: 2 },
