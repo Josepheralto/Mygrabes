@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domain Sales Website</title>
+  <title>Pro Domains- Domain Sales Website</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="navbar">
-    <div class="logo">Domain Sales</div>
+    <div class="logo">ProDomains</div>
     <div class="nav-links">
       <a href="#domains">Domains</a>
       <a href="#contact">Contact</a>
@@ -72,16 +72,17 @@
       <div class="contact-container">
         <div class="contact-form">
           <h3>Contact Form</h3>
-          <form>
-            <input type="text" placeholder="Name" required />
-            <input type="email" placeholder="Email" required />
-            <textarea placeholder="Message" required></textarea>
+          <form id="contact-form">
+            <input type="text" placeholder="Name" required id="name" />
+            <input type="email" placeholder="Email" required id="email" />
+            <textarea placeholder="Message" required id="message"></textarea>
             <button type="submit" class="button">Send Message</button>
+            <div id="form-message" class="hidden mt-4 text-green-500"></div>
           </form>
         </div>
         <div class="contact-info">
           <h3>Contact Information</h3>
-          <p>Email: info@domainsales.com</p>
+          <p>Email: info@mygraves.com</p>
           <p>Phone: +1 (123) 456-7890</p>
           <p>Address: 123 Domain Street, City, Country</p>
         </div>
@@ -112,11 +113,11 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2023 Domain Sales. All rights reserved.</p>
+        <p>&copy; 2024 ProDomains. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
 </body>
-    </html>
+  </html>
