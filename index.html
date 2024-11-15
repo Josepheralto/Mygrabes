@@ -1,113 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ProDomains - Domain Sales Website</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="navbar">
-    <div class="logo">Pro-Domains</div>
-    <div class="nav-links">
-      <a href="#domains">Domains</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
+// Domain data
+const domains = [
+    { name: 'septiccompany.co', price: 2999, category: 'services', description: 'Perfect for septic service companies', age: 2 },
+    { name: 'machineryrentalcompany.com', price: 3999, category: 'business', description: 'Ideal for equipment rental businesses', age: 3 },
+    { name: 'homeinspectorspecialist.com', price: 2499, category: 'services', description: 'Premium domain for home inspection services', age: 1 },
+    { name: 'environmentalremediationcompany.com', price: 4999, category: 'services', description: 'Environmental services domain', age: 2 },
+    { name: 'riggingllc.com', price: 1999, category: 'business', description: 'Short, memorable domain for rigging companies', age: 4 },
+    { name: 'homestagingllc.com', price: 1499, category: 'services', description: 'Perfect for home staging businesses', age: 2 },
+    { name: 'floorcoatingservices.com', price: 2999, category: 'services', description: 'Specialized domain for flooring businesses', age: 1 },
+    { name: 'stoneworkservices.com', price: 2499, category: 'services', description: 'Ideal for masonry and stonework companies', age: 3 },
+    { name: 'aithought.co', price: 5999, category: 'tech', description: 'Premium AI-focused domain', age: 1 },
+    { name: 'cognitiveagent.co', price: 4999, category: 'tech', description: 'Perfect for AI/ML companies', age: 1 },
+    { name: 'guardbot.co', price: 3999, category: 'tech', description: 'Security/AI bot domain', age: 2 },
+    { name: 'watertreatmentinc.com', price: 3499, category: 'services', description: 'Water treatment business domain', age: 3 },
+    { name: 'phoenixsolarpanel.com', price: 2999, category: 'services', description: 'Solar energy business domain', age: 2 }
+];
 
-  <div class="container mx-auto py-8">
-    <header class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Domain Names For Sale</h1>
-      <p class="text-gray-500">Find the perfect domain for your next project</p>
-    </header>
+// Function to create domain cards
+function createDomainCard(domain) {
+    return `
+        <div class="domain-card">
+            <div class="domain-name">${domain.name}</div>
+            <p>${domain.description}</p>
+            <div class="domain-metrics">
+                <span><i class="fas fa-calendar"></i> Age: ${domain.age}yr</span>
+                <span><i class="fas fa-tag"></i> ${domain.category}</span>
+            </div>
+            <div class="domain-price">$${domain.price.toLocaleString()}</div>
+            <div class="button-group">
+                <a href="https://www.godaddy.com/domainsearch/find?domainToCheck=${domain.name}" 
+                   class="btn btn-primary" target="_blank">Buy Now</a>
+                <a href="mailto:info@pro-domains.com?subject=Offer for ${domain.name}" 
+                   class="btn btn-secondary">Make Offer</a>
+            </div>
+        </div>
+    `;
+}
 
-    <div class="mb-8">
-      <div class="flex items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search by keyword"
-          class="border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          id="keyword"
-        />
-      </div>
-      <div class="flex justify-between">
-        <div class="flex items-center">
-          <span class="mr-2">Price:</span>
-          <input
-            type="number"
-            min="0"
-            max="1000"
-            placeholder="Min"
-            class="border-gray-300 rounded-md py-2 px-4 w-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="minPrice"
-          />
-          <span class="mx-2">-</span>
-          <input
-            type="number"
-            min="0"
-            max="1000"
-            placeholder="Max"
-            class="border-gray-300 rounded-md py-2 px-4 w-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="maxPrice"
-          />
-        </div>
-      </div>
-    </div>
+// Initialize domain grid
+function initializeDomainGrid(filteredDomains = domains) {
+    const domainsGrid = document.getElementById('domains');
+    domainsGrid.innerHTML = filteredDomains.map(domain => createDomainCard(domain)).join('');
+}
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="domain-cards">
-    </div>
-  </div>
+// Search functionality
+const domainSearch = document.getElementById('domainSearch');
+domainSearch.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredDomains = domains.filter(domain => 
+        domain.name.toLowerCase().includes(searchTerm) ||
+        domain.description.toLowerCase().includes(searchTerm)
+    );
+    applyFilters(filteredDomains);
+});
 
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <h2 class="text-3xl font-bold text-center mb-8">Contact Us</h2>
-      <div class="contact-container">
-        <div class="contact-form">
-          <h3>Contact Form</h3>
-          <form id="contact-form">
-            <input type="text" placeholder="Name" required id="name" />
-            <input type="email" placeholder="Email" required id="email" />
-            <textarea placeholder="Message" required id="message"></textarea>
-            <button type="submit" class="button">Send Message</button>
-            <div id="form-message" class="hidden mt-4 text-green-500"></div>
-          </form>
-        </div>
-        <div class="contact-info">
-          <h3>Contact Information</h3>
-          <p>Email: max@prodomains.site</p>
-        </div>
-      </div>
-    </div>
-  </section>
+// Filter functionality
+const categoryFilter = document.getElementById('categoryFilter');
+const priceFilter = document.getElementById('priceFilter');
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>About Us</h3>
-          <p>We provide high-quality domain names for your business needs.</p>
-        </div>
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#domains">Domains</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Subscribe</h3>
-          <form>
-            <input type="email" placeholder="Email" required />
-            <button type="submit" class="button">Subscribe</button>
-          </form>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 ProDomains. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+function applyFilters(domains) {
+    let filteredDomains = domains;
 
-  <script src="script.js"></script>
-</body>
-</html>
+    // Apply category filter
+    const category = categoryFilter.value;
+    if (category) {
+        filteredDomains = filteredDomains.filter(domain => domain.category === category);
+    }
+
+    // Apply price filter
+    const priceRange = priceFilter.value;
+    if (priceRange) {
+        const [min, max] = priceRange.split('-').map(Number);
+        filteredDomains = filteredDomains.filter(domain => domain.price >= min && (max === 0 || domain.price <= max));
+    }
+
+    initializeDomainGrid(filteredDomains);
+}
+
+categoryFilter.addEventListener('change', () => applyFilters(domains));
+priceFilter.addEventListener('change', () => applyFilters(domains));
+
+// Dark mode toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    darkModeToggle.querySelector('i').classList.toggle('fa-sun');
+    darkModeToggle.querySelector('i').classList.toggle('fa-moon');
+});
+
+// Initialize the domain grid
+initializeDomainGrid();
