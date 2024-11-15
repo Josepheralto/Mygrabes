@@ -46,16 +46,6 @@ body {
   color: #fff;
 }
 
-.admin-button {
-  background: #4F86F7;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  margin-left: 20px;
-  cursor: pointer;
-}
-
 /* Input Styles */
 input {
   border: 1px solid #ccc;
@@ -228,6 +218,14 @@ input:focus {
   text-align: center;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Form Message Styles */
+#form-message {
+  display: block;
+  margin-top: 10px;
+  color: #28a745;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
