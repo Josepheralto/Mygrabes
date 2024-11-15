@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium domain marketplace featuring high-quality business, technology, and service-related domain names for sale. Find your perfect domain name today.">
+    <title>Pro-Domains - Premium Domain Marketplace</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-light);
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            padding: 8rem 1rem 4rem;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+        }
+
+        /* Filters Section */
+        .filters {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--text-light);
+            border-radius: 0.375rem;
+            min-width: 150px;
+        }
+
+        /* Domains Grid */
+        .domains-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .domain-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .domain-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .domain-price {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .domain-metrics {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            border: 1px solid var(--text-light);
+        }
+
+        /* Contact Form */
+        .contact-section {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--text-light);
+            border-radius: 0.375rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 4rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: var(--background-light);
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .domains-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">Pro-Domains</div>
+            <div class="nav-links">
+                <a href="#domains">Domains</a>
+                <a href="#contact">Contact</a>
+                <button class="dark-mode-toggle" id="darkModeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Perfect Domain Name</h1>
+            <p>Premium domains for successful businesses</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search domains..." id="domainSearch">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="filter-container">
+            <select class="filter-select" id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="tech">Technology</option>
+                <option value="business">Business</option>
+                <option value="services">Services</option>
+            </select>
+            <select class="filter-select" id="priceFilter">
+                <option value="">All Prices</option>
+                <option value="0-1000">$0 - $1,000</option>
+                <option value="1000-5000">$1,000 - $5,000</option>
+                <option value="5000+">$5,000+</option>
+            </select>
+        </div>
+    </section>
+
+    <main class="domains-grid" id="domains">
+        <!-- Domain cards will be dynamically inserted here -->
+    </main>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Pro-Domains</h3>
+                <p>Pro-Domains is your trusted source for premium domain names. We specialize in providing high-quality domains for businesses, technology companies, and service providers.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Why Choose Us</h3>
+                <p>✓ Premium Domain Selection<br>
+                   ✓ Secure Transactions<br>
+                   ✓ Professional Support<br>
+                   ✓ Competitive Pricing</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>Email: info@pro-domains.com<br>
+                   Phone: (555) 123-4567<br>
+                   Hours: Mon-Fri 9AM-5PM EST</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Domain data
+        const domains = [
+            { name: 'septiccompany.co', price: 2999, category: 'services', description: 'Perfect for septic service companies', age: 2 },
+            { name: 'machineryrentalcompany.com', price: 3999, category: 'business', description: 'Ideal for equipment rental businesses', age: 3 },
+            { name: 'homeinspectorspecialist.com', price: 2499, category: 'services', description: 'Premium domain for home inspection services', age: 1 },
+            { name: 'environmentalremediationcompany.com', price: 4999, category: 'services', description: 'Environmental services domain', age: 2 },
+            { name: 'riggingllc.com', price: 1999, category: 'business', description: 'Short, memorable domain for rigging companies', age: 4 },
+            { name: 'homestagingllc.com', price: 1499, category: 'services', description: 'Perfect for home staging businesses', age: 2 },
+            { name: 'floorcoatingservices.com', price: 2999, category: 'services', description: 'Specialized domain for flooring businesses', age: 1 },
+            { name: 'stoneworkservices.com', price: 2499, category: 'services', description: 'Ideal for masonry and stonework companies', age: 3 },
+            { name: 'aithought.co', price: 5999, category: 'tech', description: 'Premium AI-focused domain', age: 1 },
+            { name: 'cognitiveagent.co', price: 4999, category: 'tech', description: 'Perfect for AI/ML companies', age: 1 },
+            { name: 'guardbot.co', price: 3999, category: 'tech', description: 'Security/AI bot domain', age: 2 },
+            { name: 'watertreatmentinc.com', price: 3499, category: 'services', description: 'Water treatment business domain', age: 3 },
+            { name: 'phoenixsolarpanel.com', price: 2999, category: 'services', description: 'Solar energy business domain', age: 2 }
+        ];
+
+        // Function to create domain cards
+        function createDomainCard(domain) {
+            return `
+                <div class="domain-card">
+                    <div class="domain-name">${domain.name}</div>
+                    <p>${domain.description}</p>
+                    <div class="domain-metrics">
+                        <span><i class="fas fa-calendar"></i> Age: ${domain.age}yr</span>
+                        <span><i class="fas fa-tag"></i> ${domain.category}</span>
+                    </div>
+                    <div class="domain-price">$${domain.price.toLocaleString()}</div>
+                    <div class="button-group">
+                        <a href="https://www.godaddy.com/domainsearch/find?domainToCheck=${domain.name}" 
+                           class="btn btn-primary" target="_blank">Buy Now</a>
+                        <a href="mailto:info@pro-domains.com?subject=Offer for ${domain.name}" 
+                           class="btn btn-secondary">Make Offer</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize domain grid
+        function initializeDomainGrid() {
+            const domainsGrid = document.getElementById('domains');
+            domainsGrid.innerHTML = domains.map(domain => createDomainCard(domain)).join('');
+        }
+
+        // Search functionality
+        const domainSearch = document.getElementById('domainSearch');
+        domainSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredDomains = domains.filter(domain => 
+                domain.name.toLowerCase().includes(searchTerm) ||
+                domain.description.toLowerCase().includes(searchTerm
+            );
+            initializeDomainGrid(filteredDomains);
+        });
+
+        // Filter functionality
+        const categoryFilter = document.getElementById('categoryFilter');
+        const priceFilter = document.getElementById('priceFilter');
+
+        function applyFilters() {
+            let filteredDomains = domains;
+
+            // Apply category filter
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory) {
+                filtered_domains = filtered_domains.filter(domain => domain.category === selectedCategory);
+            }
+
+            // Apply price filter
+            const selectedPriceRange = priceFilter.value;
+            if (selectedPriceRange) {
+                const [minPrice, maxPrice] = selectedPriceRange.split('-').map(Number);
+                filtered_domains = filtered_domains.filter(domain => domain.price >= minPrice && (maxPrice === 5000 ? domain.price <= 5000 : domain.price <= maxPrice));
+            }
+
+            initializeDomainGrid(filtered_domains);
+        }
+
+        categoryFilter.addEventListener('change', applyFilters);
+        priceFilter.addEventListener('change', applyFilters);
+
+        // Initialize the domain grid with all domains
+        initializeDomainGrid();
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+
+        function toggleDarkMode() {
+            if (html.classList.contains('dark-mode')) {
+                html.classList.remove('darkmode');
+                localStorage.removeItem('darkmode');
+            } else {
+                html.classList.add('darkmode');
+                localStorage.setItem('darkmode', 'enabled');
+            }
+        }
+
+        // Check if dark mode was previously enabled
+        if (localStorage.getItem('darkmode') === 'enabled') {
+            html.classList.add('darkmode');
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        // Apply dark mode styles
+        html.classList.add('darkmode');
+
+        // Additional dark mode styles in CSS (not shown in the provided code)
+        // You would need to add these styles to your CSS to fully support dark mode.
+    </script>
+</body>
+</html>
