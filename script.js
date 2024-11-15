@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'septiccompany.co', price: 399, description: 'A reliable domain for your septic company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=septiccompany.co', website: 'https://septiccompany.co' },
     { name: 'machineryrentalcompany.com', price: 499, description: 'Ideal for a machinery rental business.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=machineryrentalcompany.com', website: 'https://machineryrentalcompany.com' },
     { name: 'homeinspectorspecialist.com', price: 599, description: 'Perfect for a home inspection specialist.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=homeinspectorspecialist.com', website: 'https://homeinspectorspecialist.com' },
-    { name: 'environmentalremediationcompany.com', price: 699, description: ' environmental: price: ' environmental remedation00, 001905F7F155F786555,.9994797759959393553393353D57336536563:// 105747 1450://033635535,4335533339333335563333353353533335353133333633543333433356333333356333533356335633535335633533633533653356336335333633563353635633653353365363633633333333633 website: lat35355336533333636396,4353333333353653333563636663366656355635555636636336365356566666636656355363356336536653563356336563665363366336533565, 36533363364363563336356336336,433333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333:'https://environmentalremediationcompany.com' },
+    { name: 'environmentalremediationcompany.com', price: 699, description: 'Ideal for an environmental remediation company.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=environmentalremediationcompany.com', website: 'https://environmentalremediationcompany.com' },
     { name: 'riggingllc.com', price: 799, description: 'A strong domain for a rigging LLC.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=riggingllc.com', website: 'https://riggingllc.com' },
     { name: 'homestagingllc.com', price: 899, description: 'Great for a home staging LLC.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=homestagingllc.com', website: 'https://homestagingllc.com' },
     { name: 'floorcoatingservices.com', price: 999, description: 'Ideal for floor coating services.', link: 'https://godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=floorcoatingservices.com', website: 'https://floorcoatingservices.com' },
@@ -18,14 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const filters = {
     keyword: '',
     minPrice: 0,
-    maxPrice: 1000,
-    location: null
+    maxPrice: 1000
   };
 
   const keywordInput = document.getElementById('keyword');
   const minPriceInput = document.getElementById('minPrice');
   const maxPriceInput = document.getElementById('maxPrice');
-  const locationInput = document.getElementById('location');
   const domainCardsContainer = document.getElementById('domain-cards');
   const formMessage = document.getElementById('form-message');
   const contactForm = document.getElementById('contact-form');
@@ -61,8 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return (
         domain.name.toLowerCase().includes(filters.keyword.toLowerCase()) &&
         domain.price >= filters.minPrice &&
-        domain.price <= filters.maxPrice &&
-        (!filters.location || (domain.location.lat === filters.location.lat && domain.location.lng === filters.location.lng))
+        domain.price <= filters.maxPrice
       );
     });
     renderDomains(filteredDomains);
@@ -83,17 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
     filterDomains();
   });
 
-  locationInput.addEventListener('input', (e) => {
-    const [lat, lng] = e.target.value.split(',').map(Number);
-    filters.location = lat && lng ? { lat, lng } : null;
-    filterDomains();
-  });
-
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
+
+    // Validate form inputs
+    if (!name || !email || !message) {
+      formMessage.classList.remove('hidden');
+      formMessage.textContent = 'Please fill in all fields.';
+      return;
+    }
 
     // Simulate form submission
     formMessage.classList.remove('hidden');
