@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro-Domains - Premium Domain Marketplace</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Pro-Domains</div>
+            <div class="contact">
+                <i class="fas fa-envelope"></i> markksteffan@gmail.com
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" class="filter-input" placeholder="Search domains...">
+                <select id="tldFilter" class="filter-input">
+                    <option value="">All TLDs</option>
+                    <option value="com">.com</option>
+                    <option value="co">.co</option>
+                </select>
+                <select id="priceFilter" class="filter-input">
+                    <option value="">All Prices</option>
+                    <option value="0-200">$0 - $200</option>
+                    <option value="201-500">$201 - $500</option>
+                    <option value="501+">$501+</option>
+                </select>
+                <select id="sortBy" class="filter-input">
+                    <option value="name">Sort by Name</option>
+                    <option value="price">Sort by Price</option>
+                    <option value="date">Sort by Date</option>
+                </select>
+            </div>
+        </section>
+
+        <div class="trust-badges">
+            <div class="badge">
+                <i class="fas fa-lock"></i>
+                <span>Secure Transactions</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Buyer Protection</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-check-circle"></i>
+                <span>Verified Domains</span>
+            </div>
+        </div>
+
+        <div id="domainGrid" class="domain-grid">
+            <!-- Domains will be populated here -->
+        </div>
+    </main>
+
+    <div id="offerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Make an Offer</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="offerForm">
+                <input type="hidden" id="domainName">
+                <div class="form-group">
+                    <label>Your Name:</label>
+                    <input type="text" id="name" required class="filter-input">
+                </div>
+                <div class="form-group">
+                    <label>Your Email:</label>
+                    <input type="email" id="email" required class="filter-input">
+                </div>
+                <div class="form-group">
+                    <label>Offer Amount ($):</label>
+                    <input type="number" id="offerAmount" required class="filter-input">
+                </div>
+                <button type="submit" class="button button-primary">Submit Offer</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Pro-Domains</h3>
+                <p>We specialize in premium domain names for businesses and entrepreneurs. All our domains are carefully selected for their market value and potential.</p>
+            </div>
+            <div class="footer-section">
+                <h3>FAQ</h3>
+                <p>- How do I purchase a domain?<br>
+                   - What payment methods are accepted?<br>
+                   - How long does transfer take?<br>
+                   - What is your refund policy?</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: markksteffan@gmail.com<br>
+                   Hours: Monday-Friday, 9am-5pm EST</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
