@@ -382,5 +382,127 @@
         // Filter and render domains
         function filterAndRenderDomains() {
             let filteredDomains = [...domains];
+            // Domain data (provided in the original code) ...
+
+// ... (DOM elements also provided)
+
+// Filter and render domains
+function filterAndRenderDomains() {
+    let filteredDomains = [...domains];
+
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedTLD = tldFilter.value;
+    const selectedPrice = priceFilter.value;
+    const selectedSort = sortSelect.value;
+
+
+    // Filtering
+    if (searchTerm) {
+        filteredDomains = filteredDomains.filter(domain => domain.domain.toLowerCase().includes(searchTerm));
+    }
+
+    if (selectedTLD) {
+        filteredDomains = filteredDomains.filter(domain => domain.tld === selectedTLD);
+    }
+
+    if (selectedPrice) {
+        const priceRange = selectedPrice.split('-');
+        const minPrice = parseInt(priceRange[0]);
+        const maxPrice = parseInt(priceRange[1]) || Infinity; // Handle the "+1001" case
+        filteredDomains = filteredDomains.filter(domain => domain.price >= minPrice && domain.price <= maxPrice);
+    }
+
+    // Sorting
+    switch (selectedSort) {
+        case 'name-asc':
+            filteredDomains.sort((a, b) => a.domain.localeCompare(b.domain));
+            break;
+        case 'name-desc':
+            filteredDomains.sort((a, b) => b.domain.localeCompare(a.domain));
+            break;
+        case 'price-asc':
+            filteredDomains.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            filteredDomains.sort((a, b) => b.price - a.price);
+            break;
+    }
+
+    // Rendering
+    domainsContainer.innerHTML = ''; // Clear previous results
+    if (filteredDomains.length === 0) {
+        domainsContainer.innerHTML = '<p>No domains found matching your criteria.</p>';
+    } else {
+        filteredDomains.forEach(domain => {
+            const domainCard = `
+                <div class="domain-card">
+                    <div class="domain-name">${domain.domain}</div>
+                    <div class="domain-price">$${domain.price}</div>
+                    <div class="domain-details">TLD: ${domain.tld}<br>Min Offer: $${domain.minOffer}<br>Floor: $${domain.floorPrice}<br>Fast Transfer: ${domain.fastTransfer}</div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary buy-button" data-domain="${domain.domain}">Buy Now</button>
+                        <button class="btn btn-secondary offer-button" data-domain="${domain.domain}">Make Offer</button>
+                    </div>
+                </div>
+            `;
+            domainsContainer.innerHTML += domainCard;
+        });
+    }
+
+    // Add event listeners to the newly created buttons after rendering
+    addModalEventListeners();
+
+}
+
+
+
+
+function addModalEventListeners() {
+    const buyButtons = document.querySelectorAll('.buy-button');
+    const offerButtons = document.querySelectorAll('.offer-button');
+
+
+    offerButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const domainName = button.dataset.domain;
+            domainNameInput.value = domainName;
+            modal.style.display = 'block';
+        });
+    });
+
+
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+
+    offerForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent form from actually submitting
+        // Here you would handle the offer submission, e.g., send data to a server
+        console.log('Offer submitted for:', domainNameInput.value);
+        modal.style.display = 'none';  // Close the modal
+        offerForm.reset(); // Optional: Clear the form fields
+
+    });
+
+}
+
+
+
+
+// Initial rendering and event listeners
+filterAndRenderDomains();
+
+searchInput.addEventListener('input', filterAndRenderDomains);
+tldFilter.addEventListener('change', filterAndRenderDomains);
+priceFilter.addEventListener('change', filterAndRenderDomains);
+sortSelect.addEventListener('change', filterAndRenderDomains);
 
             
