@@ -1,120 +1,147 @@
-// script.js
-// Domain data
 const domains = [
-    { name: 'septiccompany.co', price: 2999, category: 'services', description: 'Perfect for septic service companies', age: 2 },
-    { name: 'machineryrentalcompany.com', price: 3999, category: 'business', description: 'Ideal for equipment rental businesses', age: 3 },
-    { name: 'homeinspectorspecialist.com', price: 2499, category: 'services', description: 'Premium domain for home inspection services', age: 1 },
-    { name: 'environmentalremediationcompany.com', price: 4999, category: 'services', description: 'Environmental services domain', age: 2 },
-    { name: 'riggingllc.com', price: 1999, category: 'business', description: 'Short, memorable domain for rigging companies', age: 4 },
-    { name: 'homestagingllc.com', price: 1499, category: 'services', description: 'Perfect for home staging businesses', age: 2 },
-    { name: 'floorcoatingservices.com', price: 2999, category: 'services', description: 'Specialized domain for flooring businesses', age: 1 },
-    { name: 'stoneworkservices.com', price: 2499, category: 'services', description: 'Ideal for masonry and stonework companies', age: 3 },
-    { name: 'aithought.co', price: 5999, category: 'tech', description: 'Premium AI-focused domain', age: 1 },
-    { name: 'cognitiveagent.co', price: 4999, category: 'tech', description: 'Perfect for AI/ML companies', age: 1 },
-    { name: 'guardbot.co', price: 3999, category: 'tech', description: 'Security/AI bot domain', age: 2 },
-    { name: 'watertreatmentinc.com', price: 3499, category: 'services', description: 'Water treatment business domain', age: 3 },
-    { name: 'phoenixsolarpanel.com', price: 2999, category: 'services', description: 'Solar energy business domain', age: 2 }
+    {
+        name: 'homeinspectorspecialist.com',
+        buyNowPrice: 200,
+        minOffer: 99,
+        floorPrice: 150,
+        dateAdded: '2024-02-25',
+        status: 'Listed',
+        views: 0
+    },
+    {
+        name: 'riggingllc.com',
+        buyNowPrice: 1299,
+        minOffer: 99,
+        floorPrice: 250,
+        dateAdded: '2024-05-29',
+        status: 'Listed',
+        views: 0
+    },
+    // Add other domains here
 ];
 
+function initializePage() {
+    displayDomains(domains);
+    updateStats();
+    setupEventListeners();
+}
 
+function displayDomains(domainsToShow) {
+    const container = document.getElementById('domainsContainer');
+    container.innerHTML = '';
+
+    domainsToShow.forEach(domain => {
+        const card = createDomainCard(domain);
+        container.appendChild(card);
+    });
+}
 
 function createDomainCard(domain) {
-    return `
-        <div class="domain-card">
-            <div class="domain-name">${domain.name}</div>
-            <p>${domain.description}</p>
-            <div class="domain-metrics">
-                <span><i class="fas fa-calendar"></i> Age: ${domain.age}yr</span>
-                <span><i class="fas fa-tag"></i> ${domain.category}</span>
-            </div>
-            <div class="domain-price">$${domain.price.toLocaleString()}</div>
-            <div class="button-group">
-                <a href="https://www.godaddy.com/domainsearch/find?domainToCheck=${domain.name}" 
-                   class="btn btn-primary" target="_blank">Buy Now</a>
-                <a href="mailto:info@pro-domains.com?subject=Offer for ${domain.name}" 
-                   class="btn btn-secondary">Make Offer</a>
-            </div>
+    const card = document.createElement('div');
+    card.className = 'domain-card';
+    card.innerHTML = `
+        <h2>${domain.name}</h2>
+        <div class="domain-info">
+            <p class="price">Buy Now: $${domain.buyNowPrice}</p>
+            <p>Min Offer: $${domain.minOffer}</p>
+            <p>Listed: ${new Date(domain.dateAdded).toLocaleDateString()}</p>
+            <p>Views: ${domain.views}</p>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="buyNow('${domain.name}')">Buy Now</button>
+            <button class="btn btn-secondary" onclick="makeOffer('${domain.name}')">Make Offer</button>
         </div>
     `;
+    return card;
 }
 
-
-function initializeDomainGrid(domainsToDisplay = domains) {
-    const domainsGrid = document.getElementById('domains');
-    domainsGrid.innerHTML = domainsToDisplay.map(createDomainCard).join('');
-}
-
-
-const domainSearch = document.getElementById('domainSearch');
-const searchButton = document.getElementById('searchButton');
-
-searchButton.addEventListener('click', () => {
-    const searchTerm = domainSearch.value.toLowerCase();
-    const filteredDomains = domains.filter(domain =>
-        domain.name.toLowerCase().includes(searchTerm) ||
-        domain.description.toLowerCase().includes(searchTerm)
+function searchDomains() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredDomains = domains.filter(domain => 
+        domain.name.toLowerCase().includes(searchTerm)
     );
-    initializeDomainGrid(filteredDomains);
-});
-
-
-
-const categoryFilter = document.getElementById('categoryFilter');
-const priceFilter = document.getElementById('priceFilter');
-
-function applyFilters() {
-    let filteredDomains = domains;
-
-    const selectedCategory = categoryFilter.value;
-    if (selectedCategory) {
-        filteredDomains = filteredDomains.filter(domain => domain.category === selectedCategory);
-    }
-
-    const selectedPriceRange = priceFilter.value;
-    if (selectedPriceRange) {
-        const [minPrice, maxPriceStr] = selectedPriceRange.split('-');
-        const maxPrice = maxPriceStr === '+' ? Infinity : parseInt(maxPriceStr, 10);
-        filteredDomains = filteredDomains.filter(domain => domain.price >= parseInt(minPrice, 10) && domain.price <= maxPrice);
-    }
-
-    initializeDomainGrid(filteredDomains);
+    displayDomains(filteredDomains);
 }
 
-categoryFilter.addEventListener('change', applyFilters);
-priceFilter.addEventListener('change', applyFilters);
-
-
-
-initializeDomainGrid();
-
-
-
-const darkModeToggle = document.getElementById('darkModeToggle');
-const html = document.documentElement;
-
-function toggleDarkMode() {
-    html.classList.toggle('darkmode');
-
-    if (html.classList.contains('darkmode')) {
-        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        localStorage.setItem('darkmode', 'enabled');
-    } else {
-        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        localStorage.removeItem('darkmode');
+function sortDomains(criteria) {
+    const sortedDomains = [...domains];
+    switch(criteria) {
+        case 'priceAsc':
+            sortedDomains.sort((a, b) => a.buyNowPrice - b.buyNowPrice);
+            break;
+        case 'priceDesc':
+            sortedDomains.sort((a, b) => b.buyNowPrice - a.buyNowPrice);
+            break;
+        case 'nameAsc':
+            sortedDomains.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case 'nameDesc':
+            sortedDomains.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+        case 'dateAdded':
+            sortedDomains.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            break;
     }
-     // Set initial state of toggle button based on localStorage
-    if (localStorage.getItem('darkmode') === 'enabled') {
-          darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-    else{
-        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    }
+    displayDomains(sortedDomains);
 }
 
-
-if (localStorage.getItem('darkmode') === 'enabled') {
-    html.classList.add('darkmode');
-    toggleDarkMode(); // Ensure toggle button matches the initial state
+function buyNow(domain) {
+    const url = `https://www.godaddy.com/domainsearch/find?domain=${domain}`;
+    window.location.href = url;
 }
 
-darkModeToggle.addEventListener('click', toggleDarkMode);
+function makeOffer(domain) {
+    const modal = document.getElementById('offerModal');
+    modal.style.display = 'block';
+    // Store selected domain for form submission
+    modal.dataset.domain = domain;
+}
+
+function updateStats() {
+    document.getElementById('totalDomains').textContent = domains.length;
+    document.getElementById('activeDomains').textContent = 
+        domains.filter(d => d.status === 'Listed').length;
+}
+
+function setupEventListeners() {
+    // Sort listener
+    document.getElementById('sortBy').addEventListener('change', (e) => {
+        sortDomains(e.target.value);
+    });
+
+    // Price filter listener
+    document.getElementById('priceFilter').addEventListener('change', (e) => {
+        const value = e.target.value;
+        let filtered = domains;
+        if (value !== 'all') {
+            const [min, max] = value.split('-').map(v => v === '+' ? Infinity : Number(v));
+            filtered = domains.filter(d => 
+                d.buyNowPrice >= min && (max === Infinity || d.buyNowPrice <= max)
+            );
+        }
+        displayDomains(filtered);
+    });
+
+    // Offer form submission
+    document.getElementById('offerForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const domain = document.getElementById('offerModal').dataset.domain;
+        const amount = document.getElementById('offerAmount').value;
+        const email = document.getElementById('offerEmail').value;
+        
+        // Here you would typically send this data to your backend
+        console.log(`Offer submitted for ${domain}: $${amount} from ${email}`);
+        
+        // Close modal and reset form
+        document.getElementById('offerModal').style.display = 'none';
+        e.target.reset();
+    });
+
+    // Close modal
+    document.querySelector('.close').addEventListener('click', () => {
+        document.getElementById('offerModal').style.display = 'none';
+    });
+}
+
+// Initialize the page when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializePage);
