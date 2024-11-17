@@ -3,101 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Premium domain marketplace featuring high-quality business, technology, and service-related domain names for sale. Find your perfect domain name today.">
-    <title>Pro-Domains - Premium Domain Marketplace</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Premium Domains Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav-container">
-            <div class="logo">Pro-Domains</div>
-            <div class="nav-links">
-                <a href="#domains">Domains</a>
-                <a href="#contact">Contact</a>
-                <button class="dark-mode-toggle" id="darkModeToggle">
-                    <i class="fas fa-moon"></i> 
-                </button>
+    <header>
+        <nav>
+            <div class="logo">Premium Domains</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search domains...">
+                <button onclick="searchDomains()"><i class="fas fa-search"></i></button>
             </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Find Your Perfect Domain Name</h1>
-            <p>Premium domains for successful businesses</p>
-            <div class="search-container">
-                <input type="text" placeholder="Search domains..." id="domainSearch">
-                <button class="btn btn-primary" id="searchButton">Search</button>
+    <main>
+        <div class="filters">
+            <select id="priceFilter">
+                <option value="all">All Prices</option>
+                <option value="0-500">$0 - $500</option>
+                <option value="501-1000">$501 - $1000</option>
+                <option value="1001+">$1001+</option>
+            </select>
+            <select id="sortBy">
+                <option value="nameAsc">Name (A-Z)</option>
+                <option value="nameDesc">Name (Z-A)</option>
+                <option value="priceAsc">Price (Low-High)</option>
+                <option value="priceDesc">Price (High-Low)</option>
+                <option value="dateAdded">Date Added</option>
+            </select>
+        </div>
+
+        <div class="domains-grid" id="domainsContainer">
+            <!-- Domains will be populated by JavaScript -->
+        </div>
+
+        <div id="offerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Make an Offer</h2>
+                <form id="offerForm">
+                    <input type="text" id="offerAmount" placeholder="Enter your offer amount">
+                    <input type="email" id="offerEmail" placeholder="Your email">
+                    <button type="submit">Submit Offer</button>
+                </form>
             </div>
         </div>
-    </section>
+    </main>
 
-    <section class="filters">
-        <div class="filter-container">
-            <select class="filter-select" id="categoryFilter">
-                <option value="">All Categories</option>
-                <option value="tech">Technology</option>
-                <option value="business">Business</option>
-                <option value="services">Services</option>
-            </select>
-            <select class="filter-select" id="priceFilter">
-                <option value="">All Prices</option>
-                <option value="0-1000">$0 - $1,000</option>
-                <option value="1000-5000">$1,000 - $5,000</option>
-                <option value="5000+">$5,000+</option>
-            </select>
-        </div>
-    </section>
-
-    <main class="domains-grid" id="domains"></main>
-
-    <section class="contact-section" id="contact">
-        <div class="contact-form">
-            <h2>Contact Us</h2>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="footer">
+    <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>About Pro-Domains</h3>
-                <p>Pro-Domains is your trusted source for premium domain names. We specialize in providing high-quality domains for businesses, technology companies, and service providers.</p>
+            <div class="contact-info">
+                <h3>Contact Us</h3>
+                <p>Email: info@premiumdomains.com</p>
+                <p>Phone: (555) 123-4567</p>
             </div>
-            <div class="footer-section">
-                <h3>Why Choose Us</h3>
-                <p>✓ Premium Domain Selection<br>
-                   ✓ Secure Transactions<br>
-                   ✓ Professional Support<br>
-                   ✓ Competitive Pricing</p>
+            <div class="stats">
+                <p>Total Domains: <span id="totalDomains">0</span></p>
+                <p>Active Listings: <span id="activeDomains">0</span></p>
             </div>
-            <div class="footer-section">
-                <h3>Contact Information</h3>
-                <p>Email: info@pro-domains.com<br>
-                   Phone: (555) 123-4567<br>
-                   Hours: Mon-Fri 9AM-5PM EST</p>
-            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Premium Domains Marketplace. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
-</html>
+                        </html>
