@@ -107,21 +107,63 @@ window.addEventListener('click', (event) => {
     }
 });
 
-offerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = {
-        domain: document.getElementById('domainName').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        amount: document.getElementById('offerAmount').value
-    };
+// Domain data and other variables remain the same...
 
-    // Here you would typically send this data to a server
-    console.log('Offer submitted:', formData);
-    alert('Thank you for your offer! We will contact you soon.');
-    closeModal();
-    offerForm.reset();
+// Add loading state variable
+let isSubmitting = false;
+
+// Update the offer form submission handler
+offerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (isSubmitting) return; // Prevent double submission
+    
+    const submitButton = offerForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    
+    try {
+        isSubmitting = true;
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+
+        const formData = {
+            domain: document.getElementById('domainName').value,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            amount: document.getElementById('offerAmount').value,
+        };
+
+        await emailjs.send(
+            "service_x6pewql",
+            "template_w19cyit",
+            formData,
+            // Replace 'SmZHoQylQDWW0CQ3E' with your actual EmailJS public key
+            'YOUR_PUBLIC_KEY'
+        );
+
+        alert('Thank you for your offer! We will contact you soon.');
+        closeModal();
+        offerForm.reset();
+    } catch (error) {
+        console.error('Error submitting offer:', error);
+        alert('There was an error sending your offer. Please try again.');
+    } finally {
+        isSubmitting = false;
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+    }
 });
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', filterAndDisplayDomains);
+// Update your HTML to include EmailJS script
+document.head.insertAdjacentHTML('beforeend', `
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+`);
+
+// Initialize EmailJS once the script is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize EmailJS with your public key
+    emailjs.init("SmZHoQylQDWW0CQ3E");
+    
+    // Initialize the domain grid
+    filterAndDisplayDomains();
+});
